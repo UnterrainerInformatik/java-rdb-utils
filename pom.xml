@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>info.unterrainer.commons</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.0.13</version>
+		<version>0.0.17</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -15,7 +15,73 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
-		
+		<dependency>
+			<groupId>info.unterrainer.commons</groupId>
+			<artifactId>jre-utils</artifactId>
+			<version>0.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.19</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>5.4.14.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.4.14.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.4.14.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.8.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
 	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>analyze</id>
+							<configuration>
+								<ignoredUnusedDeclaredDependencies
+									combine.children="append">
+									<ignoredUnusedDeclaredDependency>mysql:mysql-connector-java</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-c3p0</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.mariadb.jdbc:mariadb-java-client</ignoredUnusedDeclaredDependency>
+								</ignoredUnusedDeclaredDependencies>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 </project>
