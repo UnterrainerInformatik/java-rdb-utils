@@ -1,5 +1,6 @@
 package info.unterrainer.commons.rdbutils;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.persistence.EntityManager;
@@ -11,11 +12,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Transactions {
 
-	public static <T> T withNewTransaction(final EntityManagerFactory emf, final Function<EntityManager, T> function) {
+	public static void withNewTransaction(final EntityManagerFactory emf, final Consumer<EntityManager> consumer) {
+		Function<EntityManager, Void> function = em -> {
+			consumer.accept(em);
+			return null;
+		};
+		withNewTransactionReturning(emf, function);
+	}
+
+	public static <T> T withNewTransactionReturning(final EntityManagerFactory emf,
+			final Function<EntityManager, T> function) {
 		EntityManager em = null;
 		try {
 			em = emf.createEntityManager();
-			T result = withNewTransaction(em, function);
+			T result = withNewTransactionReturning(em, function);
 			return result;
 		} finally {
 			if (em != null && em.isOpen())
@@ -23,7 +33,15 @@ public class Transactions {
 		}
 	}
 
-	public static <T> T withNewTransaction(final EntityManager em, final Function<EntityManager, T> function) {
+	public static void withNewTransaction(final EntityManager em, final Consumer<EntityManager> consumer) {
+		Function<EntityManager, Void> function = entityManager -> {
+			consumer.accept(em);
+			return null;
+		};
+		withNewTransactionReturning(em, function);
+	}
+
+	public static <T> T withNewTransactionReturning(final EntityManager em, final Function<EntityManager, T> function) {
 		try {
 			if (!em.getTransaction().isActive())
 				em.getTransaction().begin();
