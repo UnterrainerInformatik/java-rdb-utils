@@ -11,7 +11,7 @@ services:
       MYSQL_USER: test
       MYSQL_PASSWORD: test
     volumes:
-      - "/app/data/rdbutils/.mysql-data/db:/var/lib/mysql"
+      - "/app/data/rdbutils/mysql-data/db:/var/lib/mysql"
 
 networks:
   default:

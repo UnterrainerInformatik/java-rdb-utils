@@ -10,7 +10,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rdb-utils</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.5</version>
 	<name>RdbUtils</name>
 	<packaging>jar</packaging>
 
@@ -21,14 +21,14 @@
 			<version>0.0.2</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.19</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>javax.persistence</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -70,7 +70,9 @@
 							<configuration>
 								<ignoredUnusedDeclaredDependencies
 									combine.children="append">
+									<ignoredUnusedDeclaredDependency>javax.persistence:javax.persistence-api</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>mysql:mysql-connector-java</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.eclipse.persistence:javax.persistence</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-c3p0</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager</ignoredUnusedDeclaredDependency>
