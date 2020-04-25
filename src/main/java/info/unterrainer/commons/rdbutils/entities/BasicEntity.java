@@ -13,12 +13,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Entity
-@MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
+@Entity
+@MappedSuperclass
 public class BasicEntity {
 
 	@Id
