@@ -7,7 +7,7 @@
 
 	<changeSet author="GUN" id="1.0">
 		<createTable tableName="test"
-			remarks="Contains test.">
+			remarks="Contains test data.">
 			<column name="id" type="BIGINT" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true"
 					primaryKeyName="pk_test" unique="true"
