@@ -2,7 +2,6 @@ package info.unterrainer.commons.rdbutils.entities;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +18,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Accessors(fluent = true, chain = true)
-@Entity
 @MappedSuperclass
 public class BasicEntity {
 
@@ -28,5 +26,5 @@ public class BasicEntity {
 	private Long id;
 
 	private LocalDateTime createdOn;
-	private LocalDateTime editedAt;
+	private LocalDateTime editedOn;
 }

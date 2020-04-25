@@ -14,12 +14,12 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuperBuilder(toBuilder = true)
 @Accessors(fluent = true, chain = true)
 @Entity
 @Table(name = "test")
 public class TestJpa extends BasicEntity {
 
-	private String log;
+	private String message;
 }
