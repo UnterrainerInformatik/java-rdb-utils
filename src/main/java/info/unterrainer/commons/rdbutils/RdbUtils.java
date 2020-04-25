@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -48,26 +47,38 @@ public class RdbUtils {
 	 */
 	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final String persistenceUnitName)
 			throws RdbUtilException {
-		Map<String, String> properties = getProperties();
+		return createAutoclosingEntityManagerFactory(persistenceUnitName, null);
+	}
+
+	/**
+	 * Creates a new {@link EntityManagerFactory} with default-parameters or
+	 * parameters given via environment variables.
+	 * <p>
+	 * Runs liquibase-update to apply any changes.<br / > Installs a shutdown-hook
+	 * that ensures that the connection to the database is properly closed.
+	 *
+	 * @param persistenceUnitName the name of the persistence-unit to use (from your
+	 *                            persistence.xml)
+	 * @return an {@link EntityManagerFactory}
+	 * @throws RdbUtilException if the database could not have been opened by
+	 *                          liquibase.
+	 */
+	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final String persistenceUnitName,
+			final String prefix) throws RdbUtilException {
+		Map<String, String> properties = getProperties(prefix);
 		liquibaseUpdate(properties);
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
 		ShutdownHook.register(() -> factory.close());
 		return factory;
 	}
 
-	private static Map<String, String> getProperties() {
+	private static Map<String, String> getProperties(final String prefix) {
+		RdbConfiguration c = RdbConfiguration.read(prefix);
+
 		Map<String, String> result = new HashMap<>();
-		String driver = Optional.ofNullable(System.getenv("DB_DRIVER")).orElse("mysql");
-		String server = Optional.ofNullable(System.getenv("DB_SERVER")).orElse("10.10.196.4");
-		String port = Optional.ofNullable(System.getenv("DB_PORT")).orElse("3306");
-		String name = Optional.ofNullable(System.getenv("DB_NAME")).orElse("test");
-		String user = Optional.ofNullable(System.getenv("DB_USER")).orElse("test");
-		String pwd = Optional.ofNullable(System.getenv("DB_PASSWORD")).orElse("test");
-
-		result.put(PROPERTY_NAME_URL, String.format("jdbc:%s://%s:%s/%s", driver, server, port, name));
-		result.put(PROPERTY_NAME_USER, user);
-		result.put(PROPERTY_NAME_PASSWORD, pwd);
-
+		result.put(PROPERTY_NAME_URL, String.format("jdbc:%s://%s:%s/%s", c.driver(), c.server(), c.port(), c.name()));
+		result.put(PROPERTY_NAME_USER, c.user());
+		result.put(PROPERTY_NAME_PASSWORD, c.password());
 		return result;
 	}
 

@@ -9,10 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
 @MappedSuperclass
+@SuperBuilder
 public class BasicEntity {
 
 	@Id
