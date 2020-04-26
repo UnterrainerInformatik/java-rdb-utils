@@ -42,9 +42,9 @@ public class ManualTests {
 	public void persistingAndReadingEntityWorks() {
 		persistTestEntity(testJpa);
 		TestJpa jpa = selectFirstTestEntity();
-		assertThat(jpa.message()).isEqualTo(testJpa.message());
-		assertThat(jpa.createdOn()).isEqualTo(testJpa.createdOn().truncatedTo(ChronoUnit.MICROS));
-		assertThat(jpa.editedOn()).isEqualTo(testJpa.editedOn().truncatedTo(ChronoUnit.MICROS));
+		assertThat(jpa.getMessage()).isEqualTo(testJpa.getMessage());
+		assertThat(jpa.getCreatedOn()).isEqualTo(testJpa.getCreatedOn().truncatedTo(ChronoUnit.MICROS));
+		assertThat(jpa.getEditedOn()).isEqualTo(testJpa.getEditedOn().truncatedTo(ChronoUnit.MICROS));
 	}
 
 	private int deleteTestTable() {

@@ -7,19 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Accessors(fluent = true, chain = true)
 @MappedSuperclass
-public class BasicEntity {
+public class BasicJpa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
