@@ -27,7 +27,7 @@ public class ManualTests {
 	@BeforeClass
 	public static void setupClass() {
 		try {
-			emf = RdbUtils.createAutoclosingEntityManagerFactory("test");
+			emf = RdbUtils.createAutoclosingEntityManagerFactory(ManualTests.class, "test");
 		} catch (RdbUtilException e) {
 			log.error("Error getting EntityManagerFactory", e);
 		}

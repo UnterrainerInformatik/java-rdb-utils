@@ -45,9 +45,9 @@ public class RdbUtils {
 	 * @throws RdbUtilException if the database could not have been opened by
 	 *                          Liquibase.
 	 */
-	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final String persistenceUnitName)
-			throws RdbUtilException {
-		return createAutoclosingEntityManagerFactory(persistenceUnitName, null);
+	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final Class<?> classLoaderSource,
+			final String persistenceUnitName) throws RdbUtilException {
+		return createAutoclosingEntityManagerFactory(classLoaderSource, persistenceUnitName, null);
 	}
 
 	/**
@@ -63,10 +63,10 @@ public class RdbUtils {
 	 * @throws RdbUtilException if the database could not have been opened by
 	 *                          liquibase.
 	 */
-	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final String persistenceUnitName,
-			final String prefix) throws RdbUtilException {
+	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final Class<?> classLoaderSource,
+			final String persistenceUnitName, final String prefix) throws RdbUtilException {
 		Map<String, String> properties = getProperties(prefix);
-		liquibaseUpdate(properties);
+		liquibaseUpdate(classLoaderSource, properties);
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
 		ShutdownHook.register(() -> factory.close());
 		return factory;
@@ -82,7 +82,8 @@ public class RdbUtils {
 		return result;
 	}
 
-	private static void liquibaseUpdate(final Map<String, String> properties) throws RdbUtilException {
+	private static void liquibaseUpdate(final Class<?> classLoaderSource, final Map<String, String> properties)
+			throws RdbUtilException {
 		Connection connection;
 		try {
 			log.info("getting connection from DriverManager");
@@ -93,7 +94,8 @@ public class RdbUtils {
 			Database database = DatabaseFactory.getInstance()
 					.findCorrectDatabaseImplementation(new JdbcConnection(connection));
 			log.info("scanning file-system for master-changelog files");
-			List<Path> masterLogFiles = Resources.walk(path -> path.toString().endsWith("-master.xml"));
+			List<Path> masterLogFiles = Resources.walk(classLoaderSource,
+					path -> path.toString().endsWith("-master.xml"));
 			for (Path p : masterLogFiles)
 				log.info("found file [{}]", p.toString());
 			if (masterLogFiles.size() == 0)

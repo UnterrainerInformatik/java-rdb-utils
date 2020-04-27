@@ -17,7 +17,8 @@ public class TransactionalTests {
 	public void liquibaseWorks() {
 		try {
 			EntityManager entityManager;
-			EntityManagerFactory factory = RdbUtils.createAutoclosingEntityManagerFactory("test");
+			EntityManagerFactory factory = RdbUtils.createAutoclosingEntityManagerFactory(TransactionalTests.class,
+					"test");
 			assertThat(true).isTrue();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -28,7 +29,8 @@ public class TransactionalTests {
 	public void queryWorks() {
 		try {
 			EntityManager entityManager;
-			EntityManagerFactory factory = RdbUtils.createAutoclosingEntityManagerFactory("test");
+			EntityManagerFactory factory = RdbUtils.createAutoclosingEntityManagerFactory(TransactionalTests.class,
+					"test");
 			EntityManager em = factory.createEntityManager();
 			// TypedQuery<Country> query = em.createQuery("SELECT * FROM Country c WHERE
 			// c.name = :name", Country.class);
