@@ -36,14 +36,14 @@ public class RdbUtils {
 	 * Creates a new {@link EntityManagerFactory} with default-parameters or
 	 * parameters given via environment variables.
 	 * <p>
-	 * Runs liquibase-update to apply any changes.<br / > Installs a shutdown-hook
+	 * Runs Liquibase-update to apply any changes.<br / > Installs a shutdown-hook
 	 * that ensures that the connection to the database is properly closed.
 	 *
 	 * @param persistenceUnitName the name of the persistence-unit to use (from your
 	 *                            persistence.xml)
 	 * @return an {@link EntityManagerFactory}
 	 * @throws RdbUtilException if the database could not have been opened by
-	 *                          liquibase.
+	 *                          Liquibase.
 	 */
 	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final String persistenceUnitName)
 			throws RdbUtilException {
@@ -85,14 +85,21 @@ public class RdbUtils {
 	private static void liquibaseUpdate(final Map<String, String> properties) throws RdbUtilException {
 		Connection connection;
 		try {
+			log.info("getting connection from DriverManager");
 			connection = DriverManager.getConnection(
 					properties.get(PROPERTY_NAME_URL) + "?allowPublicKeyRetrieval=true&useSSL=false",
 					properties.get(PROPERTY_NAME_USER), properties.get(PROPERTY_NAME_PASSWORD));
+			log.info("getting Database from JDBC-connection");
 			Database database = DatabaseFactory.getInstance()
 					.findCorrectDatabaseImplementation(new JdbcConnection(connection));
+			log.info("scanning file-system for master-changelog files");
 			List<Path> masterLogFiles = Resources.walk(path -> path.toString().endsWith("-master.xml"));
+			for (Path p : masterLogFiles)
+				log.info("found file [{}]", p.toString());
+			if (masterLogFiles.size() == 0)
+				log.info("no master-changelog file found!");
 			for (Path changelog : masterLogFiles) {
-				log.info("running Liquibase for master-file [{}]", changelog.toString());
+				log.info("running Liquibase.Update for master-changelog file [{}]", changelog.toString());
 				liquibaseUpdate(database, changelog);
 			}
 		} catch (DatabaseException e) {
