@@ -10,7 +10,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rdb-utils</artifactId>
-	<version>0.0.9</version>
+	<version>0.0.10</version>
 	<name>RdbUtils</name>
 	<packaging>jar</packaging>
 
@@ -55,6 +55,11 @@
 			<artifactId>mariadb-java-client</artifactId>
 			<version>2.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.26</version>
+		</dependency>
 
 	</dependencies>
 
@@ -77,6 +82,7 @@
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.mariadb.jdbc:mariadb-java-client</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.yaml:snakeyaml</ignoredUnusedDeclaredDependency>
 								</ignoredUnusedDeclaredDependencies>
 							</configuration>
 						</execution>
