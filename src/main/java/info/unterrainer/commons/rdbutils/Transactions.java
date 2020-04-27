@@ -48,6 +48,7 @@ public class Transactions {
 
 			T result = function.apply(em);
 
+			em.flush();
 			em.getTransaction().commit();
 			return result;
 		} catch (Exception e) {

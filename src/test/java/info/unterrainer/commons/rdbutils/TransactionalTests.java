@@ -35,7 +35,7 @@ public class TransactionalTests {
 			// TypedQuery<Country> query = em.createQuery("SELECT * FROM Country c WHERE
 			// c.name = :name", Country.class);
 			// String result = query.setParameter("name", "Gerald").getSingleResult();
-			Query q = em.createQuery("SELECT 1=1");
+			Query q = em.createQuery("SELECT 1 FROM test");
 			log.info("result: [{}]", q.getSingleResult());
 			assertThat(true).isTrue();
 		} catch (Exception e) {
