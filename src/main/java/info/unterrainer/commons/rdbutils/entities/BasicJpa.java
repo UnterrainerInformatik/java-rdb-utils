@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import info.unterrainer.commons.rdbutils.converters.LocalDateTimeConverter;
 import lombok.Data;
@@ -25,11 +23,9 @@ public class BasicJpa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Convert(converter = LocalDateTimeConverter.class)
 	private LocalDateTime createdOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Convert(converter = LocalDateTimeConverter.class)
 	private LocalDateTime editedOn;
 }
