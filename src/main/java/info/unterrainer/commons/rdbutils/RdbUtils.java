@@ -68,7 +68,10 @@ public class RdbUtils {
 		Map<String, String> properties = getProperties(prefix);
 		liquibaseUpdate(classLoaderSource, properties);
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
-		ShutdownHook.register(() -> factory.close());
+		ShutdownHook.register(() -> {
+			if (factory != null && factory.isOpen())
+				factory.close();
+		});
 		return factory;
 	}
 
