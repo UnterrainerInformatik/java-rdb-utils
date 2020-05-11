@@ -1,6 +1,5 @@
 package info.unterrainer.commons.rdbutils.entities;
 
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
@@ -11,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Entity
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
