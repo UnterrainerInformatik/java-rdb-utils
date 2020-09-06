@@ -1,0 +1,43 @@
+########################
+### VARIABLES NEEDED ###
+########################
+# RELEASE           Set to true to release a ZIP-file on github (there has to be a
+#                   target/ directory for that)
+#
+### Deploy 
+#
+####################
+### GENERAL INFO ###
+####################
+# - The 'deploy' step in Travis isn't the same process as the rest. So you have to re-source
+#   the functions into that process. More than that it isn't a full sh process like with the
+#   script-phase. So you cannot even source from there directly. That's why the source
+#   command is IN the deploy.sh script.
+
+language: java
+install:
+    - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git travis
+    - source travis/functions.Java.sh
+    - tr_setProjectSubdir Java
+    - source $TRAVIS/install.sh
+before_script:
+    - source $TRAVIS/before_script.sh
+script:
+    - source $TRAVIS/script.sh
+
+before_deploy: ./$TRAVIS/before_deploy.sh
+deploy:
+    - provider: script
+      skip_cleanup: true
+      script: ./$TRAVIS/deploy.sh
+      on:
+        branch: master
+    - provider: releases
+      skip_cleanup: true
+      overwrite: true
+      api_key:
+          secure: $GITHUB_API_KEY
+      file: $DEPLOY_BUILD.$VERSION.zip
+      on:
+        tags: true
+        branch: master
