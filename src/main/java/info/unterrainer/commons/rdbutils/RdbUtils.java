@@ -36,11 +36,11 @@ public class RdbUtils {
 	 * Creates a new {@link EntityManagerFactory} with default-parameters or
 	 * parameters given via environment variables.
 	 * <p>
-	 * Runs Liquibase-update to apply any changes.<br />
+	 * Runs Liquibase-update to apply any changes.<br>
 	 * Installs a shutdown-hook that ensures that the connection to the database is
 	 * properly closed.
 	 *
-	 * @param classLoaderSource   the source of the classloader to use
+	 * @param classLoaderSource   the source of the class-loader to use
 	 * @param persistenceUnitName the name of the persistence-unit to use (from your
 	 *                            persistence.xml)
 	 * @return an {@link EntityManagerFactory}
@@ -56,13 +56,14 @@ public class RdbUtils {
 	 * Creates a new {@link EntityManagerFactory} with default-parameters or
 	 * parameters given via environment variables.
 	 * <p>
-	 * Runs liquibase-update to apply any changes.<br />
+	 * Runs liquibase-update to apply any changes.<br>
 	 * Installs a shutdown-hook that ensures that the connection to the database is
 	 * properly closed.
 	 *
-	 * @param classLoaderSource   the source of the classloader to use
+	 * @param classLoaderSource   the source of the class-loader to use
 	 * @param persistenceUnitName the name of the persistence-unit to use (from your
 	 *                            persistence.xml)
+	 * @param prefix              the prefix
 	 * @return an {@link EntityManagerFactory}
 	 * @throws RdbUtilException if the database could not have been opened by
 	 *                          liquibase.
