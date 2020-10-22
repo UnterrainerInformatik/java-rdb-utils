@@ -11,8 +11,8 @@ import javax.persistence.LockModeType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import info.unterrainer.commons.rdbutils.exceptions.RdbUtilException;
 import info.unterrainer.commons.rdbutils.jpas.TestJpa;
@@ -23,7 +23,7 @@ public class ManualLockingTests {
 
 	public static EntityManagerFactory emf;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setupClass() {
 		try {
 			emf = RdbUtils.createAutoclosingEntityManagerFactory(ManualLockingTests.class, "test");

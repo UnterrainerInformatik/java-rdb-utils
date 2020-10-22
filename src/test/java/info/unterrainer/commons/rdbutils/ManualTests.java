@@ -9,9 +9,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import info.unterrainer.commons.rdbutils.exceptions.RdbUtilException;
 import info.unterrainer.commons.rdbutils.jpas.TestJpa;
@@ -21,10 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ManualTests {
 
 	public static EntityManagerFactory emf;
-	public static TestJpa testJpa = TestJpa.builder().message("test").createdOn(LocalDateTime.now())
-			.editedOn(LocalDateTime.now()).build();
+	public static TestJpa testJpa = TestJpa.builder()
+			.message("test")
+			.createdOn(LocalDateTime.now())
+			.editedOn(LocalDateTime.now())
+			.build();
 
-	@BeforeClass
+	@BeforeAll
 	public static void setupClass() {
 		try {
 			emf = RdbUtils.createAutoclosingEntityManagerFactory(ManualTests.class, "test");
@@ -33,7 +36,7 @@ public class ManualTests {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void beforeMethod() {
 		deleteTestTable();
 	}

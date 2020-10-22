@@ -8,8 +8,8 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import info.unterrainer.commons.rdbutils.exceptions.RdbUtilException;
 import info.unterrainer.commons.rdbutils.jpas.TestJpa;
@@ -20,14 +20,17 @@ public class HibernateDialectTests {
 
 	public static EntityManagerFactory emf;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setupClass() {
 		try {
 			emf = RdbUtils.createAutoclosingEntityManagerFactory(HibernateDialectTests.class, "test");
 			deleteTestTable();
 			for (int i = 1; i <= 20; i++)
-				persistTestEntity(TestJpa.builder().message(i + "").createdOn(LocalDateTime.now())
-						.editedOn(LocalDateTime.now()).build());
+				persistTestEntity(TestJpa.builder()
+						.message(i + "")
+						.createdOn(LocalDateTime.now())
+						.editedOn(LocalDateTime.now())
+						.build());
 		} catch (RdbUtilException e) {
 			log.error("Error getting EntityManagerFactory", e);
 		}
@@ -37,7 +40,9 @@ public class HibernateDialectTests {
 	public void gettingFiveEntitiesWithOffsetZeroReturnsFive() {
 		List<TestJpa> results = Transactions.withNewTransactionReturning(emf, em -> em
 				.createQuery(String.format("SELECT o FROM %s AS o", TestJpa.class.getSimpleName()), TestJpa.class)
-				.setMaxResults(5).setFirstResult(0).getResultList());
+				.setMaxResults(5)
+				.setFirstResult(0)
+				.getResultList());
 		assertThat(results.size()).isEqualTo(5);
 		assertThat(results.get(0).getMessage()).isEqualTo("1");
 		assertThat(results.get(4).getMessage()).isEqualTo("5");
@@ -47,7 +52,9 @@ public class HibernateDialectTests {
 	public void gettingLastTwoEntitiesWithSize5ReturnsTwo() {
 		List<TestJpa> results = Transactions.withNewTransactionReturning(emf, em -> em
 				.createQuery(String.format("SELECT o FROM %s AS o", TestJpa.class.getSimpleName()), TestJpa.class)
-				.setMaxResults(5).setFirstResult(18).getResultList());
+				.setMaxResults(5)
+				.setFirstResult(18)
+				.getResultList());
 		assertThat(results.size()).isEqualTo(2);
 		assertThat(results.get(0).getMessage()).isEqualTo("19");
 		assertThat(results.get(1).getMessage()).isEqualTo("20");
@@ -57,7 +64,9 @@ public class HibernateDialectTests {
 	public void gettingThreeEntitiesWithOffset4ReturnsThree() {
 		List<TestJpa> results = Transactions.withNewTransactionReturning(emf, em -> em
 				.createQuery(String.format("SELECT o FROM %s AS o", TestJpa.class.getSimpleName()), TestJpa.class)
-				.setMaxResults(3).setFirstResult(4).getResultList());
+				.setMaxResults(3)
+				.setFirstResult(4)
+				.getResultList());
 		assertThat(results.size()).isEqualTo(3);
 		assertThat(results.get(0).getMessage()).isEqualTo("5");
 		assertThat(results.get(1).getMessage()).isEqualTo("6");
