@@ -42,7 +42,7 @@ public class ManualLockingTests {
 					.editedOn(LocalDateTime.now())
 					.build());
 
-		ExecutorService executorService = new ThreadPoolExecutor(200, 200, 100L, TimeUnit.MILLISECONDS,
+		ExecutorService executorService = new ThreadPoolExecutor(20, 20, 60L, TimeUnit.SECONDS,
 				new LinkedBlockingQueue<Runnable>());
 		((ThreadPoolExecutor) executorService).allowCoreThreadTimeOut(true);
 		executorService.execute(() -> selectFirstTestEntityPessimistically());
