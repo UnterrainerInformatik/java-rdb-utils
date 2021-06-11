@@ -56,6 +56,30 @@ public class RdbUtils {
 	 * Creates a new {@link EntityManagerFactory} with default-parameters or
 	 * parameters given via environment variables.
 	 * <p>
+	 * Runs Liquibase-update to apply any changes.<br>
+	 * Installs a shutdown-hook that ensures that the connection to the database is
+	 * properly closed.
+	 *
+	 * @param classLoaderSource   the source of the class-loader to use
+	 * @param persistenceUnitName the name of the persistence-unit to use (from your
+	 *                            persistence.xml)
+	 * @param masterFileName      the master-file (should not end with -master since
+	 *                            this would auto-load it using the non-specific
+	 *                            method)
+	 * @return an {@link EntityManagerFactory}
+	 * @throws RdbUtilException if the database could not have been opened by
+	 *                          Liquibase.
+	 */
+	public static EntityManagerFactory createSpecificAutoclosingEntityManagerFactory(final Class<?> classLoaderSource,
+			final String persistenceUnitName, final String masterFileName) throws RdbUtilException {
+		return createSpecificAutoclosingEntityManagerFactory(classLoaderSource, persistenceUnitName, null,
+				masterFileName);
+	}
+
+	/**
+	 * Creates a new {@link EntityManagerFactory} with default-parameters or
+	 * parameters given via environment variables.
+	 * <p>
 	 * Runs liquibase-update to apply any changes.<br>
 	 * Installs a shutdown-hook that ensures that the connection to the database is
 	 * properly closed.
@@ -70,8 +94,33 @@ public class RdbUtils {
 	 */
 	public static EntityManagerFactory createAutoclosingEntityManagerFactory(final Class<?> classLoaderSource,
 			final String persistenceUnitName, final String prefix) throws RdbUtilException {
+		return createSpecificAutoclosingEntityManagerFactory(classLoaderSource, persistenceUnitName, prefix, "-master");
+	}
+
+	/**
+	 * Creates a new {@link EntityManagerFactory} with default-parameters or
+	 * parameters given via environment variables.
+	 * <p>
+	 * Runs liquibase-update to apply any changes.<br>
+	 * Installs a shutdown-hook that ensures that the connection to the database is
+	 * properly closed.
+	 *
+	 * @param classLoaderSource   the source of the class-loader to use
+	 * @param persistenceUnitName the name of the persistence-unit to use (from your
+	 *                            persistence.xml)
+	 * @param prefix              the prefix
+	 * @param masterFileName      the master-file (should not end with -master since
+	 *                            this would auto-load it using the non-specific
+	 *                            method)
+	 * @return an {@link EntityManagerFactory}
+	 * @throws RdbUtilException if the database could not have been opened by
+	 *                          liquibase.
+	 */
+	public static EntityManagerFactory createSpecificAutoclosingEntityManagerFactory(final Class<?> classLoaderSource,
+			final String persistenceUnitName, final String prefix, final String masterFileName)
+			throws RdbUtilException {
 		Map<String, String> properties = getProperties(prefix);
-		liquibaseUpdate(classLoaderSource, properties);
+		liquibaseUpdate(classLoaderSource, properties, masterFileName);
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
 		ShutdownHook.register(() -> {
 			if (factory != null && factory.isOpen())
@@ -90,8 +139,8 @@ public class RdbUtils {
 		return result;
 	}
 
-	private static void liquibaseUpdate(final Class<?> classLoaderSource, final Map<String, String> properties)
-			throws RdbUtilException {
+	public static void liquibaseUpdate(final Class<?> classLoaderSource, final Map<String, String> properties,
+			final String masterFileName) throws RdbUtilException {
 		Connection connection;
 		try {
 			log.info("getting connection from DriverManager");
@@ -103,7 +152,7 @@ public class RdbUtils {
 					.findCorrectDatabaseImplementation(new JdbcConnection(connection));
 			log.info("scanning file-system for master-changelog files");
 			List<Path> masterLogFiles = Resources.walk(classLoaderSource,
-					path -> path.toString().endsWith("-master.xml"));
+					path -> path.toString().endsWith(masterFileName + ".xml"));
 			for (Path p : masterLogFiles)
 				log.info("found file [{}]", p.toString());
 			if (masterLogFiles.size() == 0)
