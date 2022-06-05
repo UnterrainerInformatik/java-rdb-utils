@@ -10,7 +10,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rdb-utils</artifactId>
-	<version>0.1.19</version>
+	<version>0.1.20</version>
 	<name>RdbUtils</name>
 	<packaging>jar</packaging>
 
@@ -34,17 +34,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>6.0.2.Final</version>
+			<version>5.4.15.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>6.0.2.Final</version>
+			<version>5.4.24.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>6.0.0.Alpha7</version>
+			<version>5.4.15.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
