@@ -28,4 +28,4 @@ hs_err_pid*
 .classpath
 /bin/
 
-bin/
+src/main/java/info/unterrainer/commons/rdbutils/Information.java
