@@ -15,4 +15,5 @@ services:
 
 networks:
   default:
-    name: proxy_default
+    external:
+      name: proxy_default
