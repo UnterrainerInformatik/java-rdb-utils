@@ -1,8 +1,8 @@
 package info.unterrainer.commons.rdbutils.entities;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
 
 import info.unterrainer.commons.rdbutils.enums.AsyncState;
 import lombok.Data;

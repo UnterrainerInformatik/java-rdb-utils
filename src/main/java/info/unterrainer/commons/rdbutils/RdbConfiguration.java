@@ -29,7 +29,7 @@ public class RdbConfiguration {
 			p = prefix;
 		RdbConfiguration config = new RdbConfiguration();
 		config.driver = Optional.ofNullable(System.getenv(p + "DB_DRIVER")).orElse("mariadb");
-		config.server = Optional.ofNullable(System.getenv(p + "DB_SERVER")).orElse("10.10.196.4");
+		config.server = Optional.ofNullable(System.getenv(p + "DB_SERVER")).orElse("localhost");
 		config.port = Optional.ofNullable(System.getenv(p + "DB_PORT")).orElse("3306");
 		config.name = Optional.ofNullable(System.getenv(p + "DB_NAME")).orElse("test");
 		config.user = Optional.ofNullable(System.getenv(p + "DB_USER")).orElse("test");

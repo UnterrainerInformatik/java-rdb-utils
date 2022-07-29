@@ -2,10 +2,12 @@ package info.unterrainer.commons.rdbutils.converters;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 import info.unterrainer.commons.jreutils.DateUtils;
 
@@ -14,8 +16,11 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 
 	@Override
 	public Timestamp convertToDatabaseColumn(final LocalDateTime entityValue) {
-		return entityValue == null ? null
-				: new Timestamp(DateUtils.utcLocalDateTimeToEpoch(entityValue.truncatedTo(ChronoUnit.MICROS)));
+		if (entityValue == null)
+			return null;
+		Timestamp timestamp = new Timestamp(ZonedDateTime.of(entityValue, ZoneId.of("UTC")).toInstant().toEpochMilli());
+		timestamp.setNanos(entityValue.truncatedTo(ChronoUnit.MICROS).getNano());
+		return timestamp;
 	}
 
 	@Override

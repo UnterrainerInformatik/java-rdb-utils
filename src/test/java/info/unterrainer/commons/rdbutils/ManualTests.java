@@ -1,13 +1,14 @@
 package info.unterrainer.commons.rdbutils;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ public class ManualTests {
 		persistTestEntity(testJpa);
 		TestJpa jpa = selectFirstTestEntity();
 		assertThat(jpa.getMessage()).isEqualTo(testJpa.getMessage());
-		assertThat(jpa.getCreatedOn()).isEqualTo(testJpa.getCreatedOn().truncatedTo(ChronoUnit.MICROS));
+		assertEquals(jpa.getCreatedOn(), testJpa.getCreatedOn().truncatedTo(ChronoUnit.MICROS));
 		assertThat(jpa.getEditedOn()).isEqualTo(testJpa.getEditedOn().truncatedTo(ChronoUnit.MICROS));
 	}
 

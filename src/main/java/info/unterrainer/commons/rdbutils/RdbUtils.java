@@ -9,12 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import info.unterrainer.commons.jreutils.Resources;
 import info.unterrainer.commons.jreutils.ShutdownHook;
 import info.unterrainer.commons.rdbutils.exceptions.RdbUtilException;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import liquibase.Contexts;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
@@ -28,9 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RdbUtils {
 
-	public static final String PROPERTY_NAME_URL = "javax.persistence.jdbc.url";
-	public static final String PROPERTY_NAME_USER = "javax.persistence.jdbc.user";
-	public static final String PROPERTY_NAME_PASSWORD = "javax.persistence.jdbc.password";
+	public static final String PROPERTY_NAME_URL = "jakarta.persistence.jdbc.url";
+	public static final String PROPERTY_NAME_USER = "jakarta.persistence.jdbc.user";
+	public static final String PROPERTY_NAME_PASSWORD = "jakarta.persistence.jdbc.password";
 
 	/**
 	 * Creates a new {@link EntityManagerFactory} with default-parameters or
