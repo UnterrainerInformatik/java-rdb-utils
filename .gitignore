@@ -29,3 +29,5 @@ hs_err_pid*
 /bin/
 
 src/main/java/info/unterrainer/commons/rdbutils/Information.java
+/.apt_generated/
+/.apt_generated_tests/

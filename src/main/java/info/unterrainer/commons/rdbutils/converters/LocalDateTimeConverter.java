@@ -4,22 +4,25 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-
-import info.unterrainer.commons.jreutils.DateUtils;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 @Converter()
 public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
 
 	@Override
 	public Timestamp convertToDatabaseColumn(final LocalDateTime entityValue) {
-		return entityValue == null ? null
-				: new Timestamp(DateUtils.utcLocalDateTimeToEpoch(entityValue.truncatedTo(ChronoUnit.MICROS)));
+		if (entityValue == null)
+			return null;
+		Timestamp timestamp = Timestamp.valueOf(entityValue);
+		timestamp.setNanos(entityValue.truncatedTo(ChronoUnit.MICROS).getNano());
+		return timestamp;
 	}
 
 	@Override
 	public LocalDateTime convertToEntityAttribute(final Timestamp dbValue) {
-		return dbValue == null ? null : DateUtils.epochToUtcLocalDateTime(dbValue.getTime());
+		if (dbValue == null)
+			return null;
+		return dbValue.toLocalDateTime();
 	}
 }

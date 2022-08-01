@@ -2,9 +2,9 @@ package info.unterrainer.commons.rdbutils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 
 import org.junit.jupiter.api.Test;
 

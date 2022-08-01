@@ -3,8 +3,8 @@ package info.unterrainer.commons.rdbutils;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

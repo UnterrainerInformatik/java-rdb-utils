@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<parent>
 		<groupId>info.unterrainer.commons</groupId>
@@ -10,7 +8,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rdb-utils</artifactId>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<name>RdbUtils</name>
 	<packaging>jar</packaging>
 
@@ -24,27 +22,27 @@
 		<dependency>
 			<groupId>info.unterrainer.commons</groupId>
 			<artifactId>jre-utils</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.6</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>javax.persistence-api</artifactId>
-			<version>2.2</version>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>5.4.15.Final</version>
+			<version>6.1.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.4.24.Final</version>
+			<version>6.1.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.4.15.Final</version>
+			<version>5.6.10.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
@@ -74,11 +72,10 @@
 						<execution>
 							<id>analyze</id>
 							<configuration>
-								<ignoredUnusedDeclaredDependencies
-									combine.children="append">
-									<ignoredUnusedDeclaredDependency>javax.persistence:javax.persistence-api</ignoredUnusedDeclaredDependency>
+								<ignoredUnusedDeclaredDependencies combine.children="append">
+									<ignoredUnusedDeclaredDependency>jakarta.persistence:jakarta.persistence-api</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>mysql:mysql-connector-java</ignoredUnusedDeclaredDependency>
-									<ignoredUnusedDeclaredDependency>org.eclipse.persistence:javax.persistence</ignoredUnusedDeclaredDependency>
+									<ignoredUnusedDeclaredDependency>org.eclipse.persistence:jakarta.persistence</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-c3p0</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-core</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.hibernate:hibernate-entitymanager</ignoredUnusedDeclaredDependency>
