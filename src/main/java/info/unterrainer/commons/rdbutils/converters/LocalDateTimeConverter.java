@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-
+import liquibase.pro.packaged.db;
 import info.unterrainer.commons.jreutils.DateUtils;
 
 @Converter()
@@ -23,8 +23,13 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 		return timestamp;
 	}
 
+	// FIXXXING
 	@Override
 	public LocalDateTime convertToEntityAttribute(final Timestamp dbValue) {
-		return dbValue == null ? null : DateUtils.epochToUtcLocalDateTime(dbValue.getTime());
+		if (dbValue == null)
+			return null;
+		LocalDateTime ldt = DateUtils.epochToUtcLocalDateTime(dbValue.getTime());
+		ldt = ldt.withNano(dbValue.getNanos());
+		return ldt;
 	}
 }
