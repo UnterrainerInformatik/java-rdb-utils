@@ -18,7 +18,6 @@ public class LocalDateTimeConverterTests {
 	public void conversionFromLocalDateTimeToTimestamp() {
 		LocalDateTime d = DateUtils.nowUtc();
 		Timestamp ts = converter.convertToDatabaseColumn(d);
-
 		assertThat(DateUtils.utcLocalDateTimeToEpoch(d)).isEqualTo(ts.getTime());
 	}
 

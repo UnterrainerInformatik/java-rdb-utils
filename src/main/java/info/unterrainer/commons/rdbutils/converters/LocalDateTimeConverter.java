@@ -1,6 +1,7 @@
 package info.unterrainer.commons.rdbutils.converters;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -17,7 +18,7 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 	public Timestamp convertToDatabaseColumn(final LocalDateTime entityValue) {
 		if (entityValue == null)
 			return null;
-		Timestamp timestamp = new Timestamp(ZonedDateTime.of(entityValue, ZoneId.of("UTC")).toInstant().toEpochMilli());
+		Timestamp timestamp = Timestamp.valueOf(entityValue);
 		timestamp.setNanos(entityValue.truncatedTo(ChronoUnit.MICROS).getNano());
 		return timestamp;
 	}
