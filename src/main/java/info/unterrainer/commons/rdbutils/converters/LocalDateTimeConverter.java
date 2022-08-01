@@ -8,7 +8,6 @@ import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import liquibase.pro.packaged.db;
 import info.unterrainer.commons.jreutils.DateUtils;
 
 @Converter()
@@ -29,7 +28,6 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 		if (dbValue == null)
 			return null;
 		LocalDateTime ldt = DateUtils.epochToUtcLocalDateTime(dbValue.getTime());
-		ldt = ldt.withNano(dbValue.getNanos());
-		return ldt;
+		return ldt.withNano(dbValue.getNanos());
 	}
 }
