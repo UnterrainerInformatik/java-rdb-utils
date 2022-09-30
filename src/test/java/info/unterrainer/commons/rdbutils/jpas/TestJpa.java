@@ -1,9 +1,8 @@
 package info.unterrainer.commons.rdbutils.jpas;
 
+import info.unterrainer.commons.rdbutils.entities.BasicJpa;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
-import info.unterrainer.commons.rdbutils.entities.BasicJpa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
