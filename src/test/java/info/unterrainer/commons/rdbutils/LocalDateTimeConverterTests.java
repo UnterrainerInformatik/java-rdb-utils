@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import info.unterrainer.commons.jreutils.DateUtils;
 import info.unterrainer.commons.rdbutils.converters.LocalDateTimeConverter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class LocalDateTimeConverterTests {
 
 	LocalDateTimeConverter converter = new LocalDateTimeConverter();
@@ -26,11 +28,13 @@ public class LocalDateTimeConverterTests {
 	public void conversionFromTimestampToLocalDateTime() {
 		LocalDateTime now = DateUtils.nowUtc();
 		Timestamp ts = new Timestamp(DateUtils.utcLocalDateTimeToEpoch(now));
+		ts.setNanos(now.truncatedTo(ChronoUnit.MICROS).getNano());
 		LocalDateTime d = converter.convertToEntityAttribute(ts);
 
 		Timestamp timestamp = Timestamp.valueOf(d);
 		timestamp.setNanos(d.truncatedTo(ChronoUnit.MICROS).getNano());
+		LocalDateTime other = DateUtils.nowUtc();
 
-		assertThat(d).isEqualTo(ts.toLocalDateTime());
+		assertThat(d).isEqualTo(other);
 	}
 }
