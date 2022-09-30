@@ -2,7 +2,6 @@ package info.unterrainer.commons.rdbutils.converters;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.AttributeConverter;
@@ -24,10 +23,6 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 	public LocalDateTime convertToEntityAttribute(final Timestamp dbValue) {
 		if (dbValue == null)
 			return null;
-		LocalDateTime r = dbValue.toInstant()
-				.atZone(ZoneId.systemDefault())
-				.withZoneSameInstant(ZoneId.of("UTC"))
-				.toLocalDateTime();
-		return r;
+		return dbValue.toLocalDateTime();
 	}
 }
