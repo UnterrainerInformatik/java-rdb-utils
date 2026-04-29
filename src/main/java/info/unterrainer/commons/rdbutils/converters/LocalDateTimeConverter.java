@@ -2,6 +2,7 @@ package info.unterrainer.commons.rdbutils.converters;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.AttributeConverter;
@@ -14,15 +15,13 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 	public Timestamp convertToDatabaseColumn(final LocalDateTime entityValue) {
 		if (entityValue == null)
 			return null;
-		Timestamp timestamp = Timestamp.valueOf(entityValue);
-		timestamp.setNanos(entityValue.truncatedTo(ChronoUnit.MICROS).getNano());
-		return timestamp;
+		return Timestamp.from(entityValue.truncatedTo(ChronoUnit.MICROS).toInstant(ZoneOffset.UTC));
 	}
 
 	@Override
 	public LocalDateTime convertToEntityAttribute(final Timestamp dbValue) {
 		if (dbValue == null)
 			return null;
-		return dbValue.toLocalDateTime();
+		return LocalDateTime.ofInstant(dbValue.toInstant(), ZoneOffset.UTC);
 	}
 }

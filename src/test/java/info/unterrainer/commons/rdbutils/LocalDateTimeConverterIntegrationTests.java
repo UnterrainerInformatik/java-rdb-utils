@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.TimeZone;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,14 +26,23 @@ public class LocalDateTimeConverterIntegrationTests {
 	LocalDateTimeConverter converter = new LocalDateTimeConverter();
 
 	public static EntityManagerFactory emf;
+	private static TimeZone originalTimeZone;
 
 	@BeforeAll
 	public static void setupClass() {
+		originalTimeZone = TimeZone.getDefault();
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Vienna"));
 		try {
 			emf = RdbUtils.createAutoclosingEntityManagerFactory(ManualTests.class, "test");
 		} catch (RdbUtilException e) {
 			log.error("Error getting EntityManagerFactory", e);
 		}
+	}
+
+	@AfterAll
+	public static void teardownClass() {
+		if (originalTimeZone != null)
+			TimeZone.setDefault(originalTimeZone);
 	}
 
 	@BeforeEach

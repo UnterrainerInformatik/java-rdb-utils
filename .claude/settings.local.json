@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mvn clean:*)"
+      "Bash(mvn clean:*)",
+      "WebSearch",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(openspec --version)",
+      "Bash(openspec new *)",
+      "Bash(openspec status *)",
+      "Bash(openspec instructions *)",
+      "Bash(mvn -B -q -DskipITs=false test -Dtest=LocalDateTimeConverterTests)",
+      "Bash(mvn -B -q test -Dtest=LocalDateTimeConverterTests)",
+      "Bash(mvn -B test -Dtest=LocalDateTimeConverterTests)",
+      "Bash(mvn -B test -Dtest=LocalDateTimeConverterTests -Duser.timezone=Europe/Vienna)",
+      "Bash(mvn -B test -Dtest=LocalDateTimeConverterTests -Duser.timezone=America/Los_Angeles)"
     ]
   }
 }
